@@ -33,7 +33,14 @@ const createSnippet = async (code, language, description, name) => {
 };
 
 const updateSnippet = async (id, code, language, name, description) => {
-  //TODO: update snippet
+  return await faunaClient.query(
+    q.Update(q.Ref(q.Collection("snippets"), id), {
+      code,
+      language,
+      name,
+      description,
+    })
+  );
 };
 
 const deleteSnippet = async (id) => {
