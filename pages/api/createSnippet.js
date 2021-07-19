@@ -5,7 +5,6 @@ export default async function handler(req, res) {
     return res.status(405).json({ msg: "Method not allowed" });
   }
   try {
-    //TODO: create the snippet
     const createdSnippet = await createSnippet(
       code,
       language,
