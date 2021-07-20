@@ -40,10 +40,7 @@ const createSnippet = async (code, language, description, name) => {
 const updateSnippet = async (id, code, language, name, description) => {
   return await faunaClient.query(
     q.Update(q.Ref(q.Collection("snippets"), id), {
-      code,
-      language,
-      name,
-      description,
+      data: { code, language, name, description },
     })
   );
 };

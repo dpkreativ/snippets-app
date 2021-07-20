@@ -36,7 +36,7 @@ export default function SnippetForm({ snippet }) {
     try {
       await fetch("/api/updateSnippet", {
         method: "PUT",
-        body: JSON.stringify({ code, language, description, name }),
+        body: JSON.stringify({ code, language, description, name, id }),
         headers: {
           "Content-Type": "application/json",
         },
