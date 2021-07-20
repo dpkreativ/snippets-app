@@ -3,15 +3,20 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import Link from "next/link";
 export default function SnippetForm({ snippet }) {
-  //TODO: configure react hook form
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm({
+    defaultValues: {
+      code: snippet ? snippet.data.code : "",
+      language: snippet ? snippet.data.language : "",
+      description: snippet ? snippet.data.description : "",
+      name: snippet ? snippet.data.name : "",
+    },
+  });
   const router = useRouter();
 
   const createSnippet = async (data) => {
     const { code, language, description, name } = data;
     console.log(data);
     try {
-      //TODO: create snippet
       await fetch("/api/createSnippet", {
         method: "POST",
         body: JSON.stringify({ code, language, description, name }),
@@ -29,13 +34,19 @@ export default function SnippetForm({ snippet }) {
     const { code, language, description, name } = data;
     const id = snippet.id;
     try {
-      //TODO: updarte snippet
+      await fetch("/api/updateSnippet", {
+        method: "PUT",
+        body: JSON.stringify({ code, language, description, name }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       router.push("/");
     } catch (err) {
       console.error(err);
     }
   };
-  //TODO: register inputs and add error messages
+
   return (
     <form onSubmit={handleSubmit(snippet ? updateSnippet : createSnippet)}>
       <div className="mb-4">
